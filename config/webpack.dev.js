@@ -7,6 +7,25 @@ const devConfig = {
     filename: "bundle.js",
     path: path.join(__dirname, "..", "dist"),
   },
+  module: {
+    rules: [
+      {
+        test: /\.(jpg|png|jpeg|gif)$/,
+        use: ["file-loader"],
+      },
+    ],
+  },
+  devServer: {
+    proxy: {
+      "/api2": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        pathRewrite: {
+          "/api2": "",
+        },
+      },
+    },
+  },
 };
 
 module.exports = merge(commonConfig, devConfig);
